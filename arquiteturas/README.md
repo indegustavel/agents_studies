@@ -9,3 +9,7 @@ Folder destinado aos estudos em arquiteturas
 # 2 - Arquitetura Baseada em Modelo
 
 - Aqui, o agente começa a ter uma representação interna do mundo para tomar decisões mais inteligentes baseadas em sua "memória". Ou seja, além de reagir ao que está vendo agora, ele mantém um histórico do que já ocorreu, tornando suas próximas decisões mais acertadas.
+
+# 3 - Arquitetura Híbrida
+
+- A arquitetura híbrida surge para juntar o melhor dos dois mundos: A rapidez da arquitetura reflexiva + a memória da arquitetura baseada em modelo, o objetivo é juntar a rapidez de um e a inteligência de outro para melhorar seus processos. Normalmente, tem 3 camadas: Camada reflexiva (para ações rápidas e críticas), camada deliberativa (para ações estratégicas e "complexas") e camada de coordenação (para orquestrar as duas anteriores e definir ambientes de prioridade.)
