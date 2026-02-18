@@ -1,6 +1,5 @@
 from langchain_classic.agents import AgentExecutor, create_openai_tools_agent
 
-
 def criar_agente_vendas(llm, tools, prompt):
     """
     Cria a estrutura lógica do agente de vendas.

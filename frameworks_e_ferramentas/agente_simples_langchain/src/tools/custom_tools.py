@@ -10,7 +10,7 @@ def buscar_preco_produto(consulta_usuario: str) -> str:
     """
     Útil para consultar o preço de um produto.
     Funciona mesmo se o nome não for exato (ex: 'monitor gamer' acha 'monitor').
-    Acione a tool quando o cliente solicitar o preço de algum produto, ou quando você precisar saber o preço de algum produto
+    Acione a tool quando o cliente solicitar o preço de algum produto, ou quando você precisar saber o preço de algum produto.
     """
     # Nossa "Base de Dados"
     base_dados_precos = {
