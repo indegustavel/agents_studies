@@ -1,0 +1,26 @@
+# ESSE ARQUIVO DEFINE OS AGENTES DEVEM ENTREGAR
+
+research_task:
+  description: >
+    Extraia o preço atual, a variação dos últimos 30 dias e os principais indicadores 
+    financeiros da ação {ticket}. Foque em dados concretos.
+  expected_output: >
+    Um relatório técnico contendo preço atual, P/L, RSI e uma breve análise da tendência de preço.
+  agent: researcher
+
+news_analysis_task:
+  description: >
+    Busque por notícias publicadas nos últimos 7 dias sobre {ticket}. 
+    Analise como essas notícias podem impactar o preço da ação no curto prazo.
+  expected_output: >
+    Um resumo dos 3 principais eventos/notícias e uma classificação de sentimento (Positivo/Negativo/Neutro).
+  agent: news_analyst
+
+recommendation_task:
+  description: >
+    Com base no relatório técnico e na análise de notícias, decida se a recomendação 
+    para {ticket} é COMPRA, VENDA ou MANTER. Justifique sua resposta detalhadamente.
+  expected_output: >
+    Um relatório final em Markdown estruturado com: Resumo Executivo, Análise Técnica, 
+    Análise de Sentimento e Veredito Final.
+  agent: investment_advisor
