@@ -6,7 +6,7 @@ from langchain_core.tools import tool
 @tool
 def buscar_preco_produto(nome_produto: str) -> str:
     """
-    Útil para consultar o preço de um produto específico na nossa base de dados.
+    Útil para consultar o preço de um produto na nossa base de dados.
     O nome do produto deve ser fornecido de forma clara.
     """
     # Aqui você conectaria com um banco de dados real ou uma API.

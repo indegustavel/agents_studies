@@ -5,6 +5,7 @@ from src.utils.config import get_llm
 from src.tools.custom_tools import ferramentas_disponiveis
 from src.prompts.prompts import get_agent_prompt
 from src.agents.base_agent import criar_agente_vendas
+from src.utils.helpers import formatar_resposta_agente
 
 def executar_fluxo_conversa():
     # 1. Inicializar componentes base
@@ -36,8 +37,10 @@ def executar_fluxo_conversa():
             "chat_history": chat_history
         })
 
-        # Exibimos a resposta final (o campo 'output' contém a string de resposta)
-        agente_msg = resposta["output"]
+        # 3. LIMPEZA (O segredo para não quebrar a memória)
+        # Pegamos o output bruto e passamos pelo nosso limpador
+        agente_msg = formatar_resposta_agente(resposta["output"])
+
         print(f"\nAgente: {agente_msg}")
 
         # ATUALIZAÇÃO DA MEMÓRIA:
