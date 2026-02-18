@@ -1,43 +1,55 @@
 from langchain_core.tools import tool
+import unicodedata
 
-# O decorador @tool transforma uma função comum em uma ferramenta que o LangChain entende.
-# O nome da função e o docstring são enviados ao LLM como 'manual de instruções', sendo usado para ela identificar quando deve acionar essa tool.
+def normalizar_texto(texto: str) -> str:
+    """Remove acentos e coloca em minúsculo para facilitar a busca."""
+    return unicodedata.normalize('NFKD', texto).encode('ASCII', 'ignore').decode('ASCII').lower()
 
 @tool
-def buscar_preco_produto(nome_produto: str) -> str:
+def buscar_preco_produto(consulta_usuario: str) -> str:
     """
-    Útil para consultar o preço de um produto na nossa base de dados.
-    O nome do produto deve ser fornecido de forma clara.
+    Útil para consultar o preço de um produto.
+    Funciona mesmo se o nome não for exato (ex: 'monitor gamer' acha 'monitor').
+    Acione a tool quando o cliente solicitar o preço de algum produto, ou quando você precisar saber o preço de algum produto
     """
-    # Aqui você conectaria com um banco de dados real ou uma API.
-    # Por enquanto, vamos simular uma base de dados (Mock).
+    # Nossa "Base de Dados"
     base_dados_precos = {
         "laptop": "R$ 4500,00",
         "mouse": "R$ 150,00",
         "teclado": "R$ 300,00",
         "monitor": "R$ 1200,00",
-        "mousepad": "R$ 67,00",
-        "smartphone": "R$ 2000,00"
+        "smartphone": "R$ 2500,00"
     }
     
-    # Normalizamos o input para busca (ex: tudo em minúsculo)
-    produto_formatado = nome_produto.lower().strip()
+    # 1. Normalização (para "Teclado" achar "teclado")
+    consulta_norm = normalizar_texto(consulta_usuario)
     
-    # Retornamos o preço ou uma mensagem amigável caso não exista.
-    # Método reflexivo para evitar latência e custo desnecessário
-    return base_dados_precos.get(produto_formatado, f"Desculpe, o produto '{nome_produto}' não foi encontrado.")
+    # 2. Busca Inteligente (Iterativa)
+    # Verifica se alguma chave do banco está DENTRO do que o usuário pediu
+    # Ex: Se usuário pediu "preço do monitor ultra", a chave "monitor" será encontrada.
+    produto_encontrado = None
+    
+    for produto_db, preco in base_dados_precos.items():
+        produto_db_norm = normalizar_texto(produto_db)
+        
+        # Lógica: Se "monitor" (banco) está dentro de "monitor gamer" (pesquisa)
+        # OU se "monitor gamer" (pesquisa) contém "monitor" (banco)
+        if produto_db_norm in consulta_norm or consulta_norm in produto_db_norm:
+            produto_encontrado = (produto_db, preco)
+            break # Paramos no primeiro match
+            
+    if produto_encontrado:
+        nome, valor = produto_encontrado
+        return f"Encontrado: O {nome} custa {valor}."
+    
+    # 3. Fail-safe: Se não achou nada, retorna a lista para o Agente saber o que tem.
+    produtos_disponiveis = ", ".join(base_dados_precos.keys())
+    return f"Não encontrei '{consulta_usuario}'. Temos apenas estes produtos: {produtos_disponiveis}."
 
 @tool
 def calcular_imposto_importacao(valor_base: float) -> float:
-    """
-    Calcula o imposto de importação simplificado (60%) sobre o valor de um produto.
-    Recebe um valor numérico e retorna o valor do imposto.
-    """
-    # Exemplo de lógica de negócio que o LLM não saberia fazer sozinho com precisão
-    taxa = 0.60
-    imposto = valor_base * taxa
-    return imposto
+    """Calcula 60% de imposto sobre o valor numérico informado."""
+    return valor_base * 0.60
 
-# Lista exportável para facilitar a importação no arquivo principal do agente
-# Agrupar as ferramentas facilita passar todas de uma vez para o agente depois.
+# Lista exportável
 ferramentas_disponiveis = [buscar_preco_produto, calcular_imposto_importacao]

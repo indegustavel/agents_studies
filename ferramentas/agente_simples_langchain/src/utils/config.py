@@ -1,12 +1,13 @@
 import os
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openrouter import ChatOpenRouter
 
 # 1. Carrega as variáveis de ambiente definidas no arquivo .env
 # Isso garante que suas chaves de API não fiquem expostas no código principal.
 load_dotenv()
 
-def get_llm(model_name: str = "gemini-2.5-flash", temperature: float = 0.5):
+def get_llm(model_name: str = "openrouter/aurora-alpha", temperature: float = 0.5):
     """
     Instancia e configura o modelo de linguagem (LLM).
     
@@ -20,13 +21,13 @@ def get_llm(model_name: str = "gemini-2.5-flash", temperature: float = 0.5):
     """
     
     # Verificamos se a chave de API está presente antes de tentar criar o modelo
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = os.getenv("OPENROUTER_API_KEY")
     if not api_key:
         raise ValueError("A variável GEMINI_API_KEY não foi encontrada no arquivo .env")
 
     # Criamos o objeto do LLM.
     # O LangChain abstrai a chamada da API, facilitando a troca de modelos no futuro.
-    llm = ChatGoogleGenerativeAI(
+    llm = ChatOpenRouter(
         model=model_name,
         temperature=temperature,
         api_key=api_key
