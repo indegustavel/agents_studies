@@ -1,7 +1,7 @@
 from langchain_core.tools import tool
 
 # O decorador @tool transforma uma função comum em uma ferramenta que o LangChain entende.
-# O nome da função e o docstring são enviados ao LLM como 'manual de instruções'.
+# O nome da função e o docstring são enviados ao LLM como 'manual de instruções', sendo usado para ela identificar quando deve acionar essa tool.
 
 @tool
 def buscar_preco_produto(nome_produto: str) -> str:

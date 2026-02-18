@@ -1,0 +1,1 @@
+from .base_agent import criar_agente_vendas

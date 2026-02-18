@@ -1,1 +1,0 @@
-#usamos o __init__.py para que o python trate esse folder como um package
