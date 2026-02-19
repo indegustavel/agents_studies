@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from crew import StockAnalystCrew
+from datetime import datetime
 
 # 1. Carregamos as chaves de API do arquivo .env
 load_dotenv()
@@ -15,7 +16,8 @@ def run():
     # 2. Definimos qual ação queremos analisar
     # Você pode mudar para 'AAPL', 'NVDA', 'ITUB4.SA', etc.
     inputs = {
-        'ticket': 'PETR4.SA' 
+        'ticket': 'PETR4.SA',
+        'data': datetime.now().strftime("%m-%d")
     }
 
     try:

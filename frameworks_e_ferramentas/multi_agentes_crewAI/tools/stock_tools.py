@@ -1,5 +1,6 @@
 import yfinance as yf
 from crewai.tools import tool
+from duckduckgo_search import DDGS 
 
 class StockTools:
     
@@ -19,7 +20,10 @@ class StockTools:
             hist = stock.history(period="1mo")
             
             # Buscamos informações fundamentais (P/L, Dividendos, etc)
-            info = stock.info
+            info = stock.fast_info
+            
+            #Adicionar data da última atualização
+            last_updated = stock.history(period="1d").index[-1]
             
             # Criamos uma resposta organizada para o agente ler
             return f"""
@@ -40,6 +44,12 @@ class StockTools:
         O parâmental 'query' deve ser uma busca otimizada (ex: 'últimas notícias PETR4').
         Use esta ferramenta para entender o sentimento do mercado e eventos atuais.
         """
+        from datetime import datetime, timedelta
+        # Adicionar filtro de data na query
+        data_recente = (datetime.now() - timedelta(days=7)).strftime("%d/%m/%Y")
+        query_com_filtro = f"{query} after:{data_recente}"
+
         # DuckDuckGoSearchRun é uma ferramenta pronta que não exige chave de API (grátis!)
-        search = DuckDuckGoSearchRun()
-        return search.run(query)
+        search = DDGS()
+        results = search.news(query, max_results=5)
+        return str(results)

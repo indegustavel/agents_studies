@@ -1,6 +1,7 @@
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from tools import StockTools # Importa as ferramentas que criamos no passo anterior
+from datetime import datetime
 
 @CrewBase
 class StockAnalystCrew():
@@ -19,7 +20,7 @@ class StockAnalystCrew():
     main_llm = LLM(
         model="openrouter/z-ai/glm-4.5-air:free", 
         base_url="https://openrouter.ai/api/v1",
-        temperature=0.7,
+        temperature=0.2,
         # Você pode até forçar o idioma aqui se o modelo insistir em inglês
         extra_headers={"language": "pt-br"}
     )
@@ -79,9 +80,10 @@ class StockAnalystCrew():
     @task
     def recommendation_task(self) -> Task:
         """Tarefa final de compilação do relatório."""
+        data = datetime.now().strftime("%m-%d")
         return Task(
             config=self.tasks_config['recommendation_task'],
-            output_file='relatorio_final.md' # O resultado final será gravado neste arquivo
+            output_file='relatorio_final_{data}.md' # O resultado final será gravado neste arquivo
         )
 
     # --- O Processo (A Equipe) ---
