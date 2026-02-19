@@ -1,10 +1,19 @@
+#DICA: USE O UV PIP INSTALL
+
+# Core e Orquestração
 langchain
+crewai
+langchain-community
+
+# Integrações (Removendo travas rígidas para evitar o conflito de SDK)
 langchain-openai
-langchain-community 
-google-search-results
+openai
 langchain-google-genai
 langchain-openrouter
+
+# Ferramentas e Auxiliares
+google-search-results
 yfinance
-duckduckgo-search-api
+duckduckgo-search
 python-dotenv
-crewai
+litellm

@@ -1,10 +1,9 @@
 import yfinance as yf
-from langchain.tools import tool
-from langchain_community.tools import DuckDuckGoSearchRun
+from crewai.tools import tool
 
 class StockTools:
     
-    @tool("fetch_stock_data")
+    @tool
     def fetch_stock_data(ticket: str):
         """
         Esta ferramenta busca preços, indicadores financeiros e estatísticas 
@@ -34,7 +33,7 @@ class StockTools:
         except Exception as e:
             return f"Erro ao coletar dados da ação {ticket}: {e}"
 
-    @tool("search_market_news")
+    @tool
     def search_market_news(query: str):
         """
         Busca notícias recentes na internet sobre empresas, setores ou o mercado financeiro.

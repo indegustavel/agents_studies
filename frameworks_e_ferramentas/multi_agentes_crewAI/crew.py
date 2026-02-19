@@ -17,7 +17,8 @@ class StockAnalystCrew():
     # Criamos um objeto de configuração da LLM
     # Aqui você tem controle total sobre o modelo e a 'criatividade' (temperature)
     main_llm = LLM(
-        model="aurora/alpha", # Ou "gpt-4-turbo", "claude-3-5-sonnet", etc.
+        model="openrouter/aurora-alpha", 
+         base_url="https://openrouter.ai/api/v1",
         temperature=0.7,
         # Você pode até forçar o idioma aqui se o modelo insistir em inglês
         extra_headers={"language": "pt-br"}
@@ -43,7 +44,7 @@ class StockAnalystCrew():
         """Cria o Analista de Notícias."""
         return Agent(
             config=self.agents_config['news_analyst'],
-            tools=[StockTools.search_news], # Este agente pode usar a busca na internet
+            tools=[StockTools.search_market_news], # Este agente pode usar a busca na internet
             verbose=True
         )
 
