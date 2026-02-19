@@ -17,8 +17,8 @@ class StockAnalystCrew():
     # Criamos um objeto de configuração da LLM
     # Aqui você tem controle total sobre o modelo e a 'criatividade' (temperature)
     main_llm = LLM(
-        model="openrouter/aurora-alpha", 
-         base_url="https://openrouter.ai/api/v1",
+        model="openrouter/z-ai/glm-4.5-air:free", 
+        base_url="https://openrouter.ai/api/v1",
         temperature=0.7,
         # Você pode até forçar o idioma aqui se o modelo insistir em inglês
         extra_headers={"language": "pt-br"}
@@ -36,7 +36,8 @@ class StockAnalystCrew():
             config=self.agents_config['researcher'],
             tools=[StockTools.fetch_stock_data], # Damos a 'ferramenta' de dados técnicos para ele
             verbose=True, # Permite que você veja o agente 'pensando' no terminal
-            allow_delegation=False # Ele foca apenas na sua tarefa, sem pedir ajuda
+            allow_delegation=False, # Ele foca apenas na sua tarefa, sem pedir ajuda
+            llm=self.main_llm
         )
 
     @agent
@@ -45,7 +46,8 @@ class StockAnalystCrew():
         return Agent(
             config=self.agents_config['news_analyst'],
             tools=[StockTools.search_market_news], # Este agente pode usar a busca na internet
-            verbose=True
+            verbose=True,
+            llm=self.main_llm
         )
 
     @agent
@@ -53,7 +55,8 @@ class StockAnalystCrew():
         """Cria o Consultor Final (O Tomador de Decisão)."""
         return Agent(
             config=self.agents_config['investment_advisor'],
-            verbose=True
+            verbose=True,
+            llm=self.main_llm
             # Note: Ele não precisa de ferramentas, ele usa a lógica da LLM
         )
 
