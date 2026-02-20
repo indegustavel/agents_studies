@@ -24,3 +24,26 @@ recommendation_task:
     Um relatório final em Markdown estruturado com: Resumo Executivo, Análise Técnica, 
     Análise de Sentimento e Veredito Final.
   agent: investment_advisor
+
+validate_research_task:
+  description: >
+    Revise o relatório técnico do analista de dados. Verifique se contém:
+    - Preço atual da ação
+    - Indicadores P/L, RSI
+    - Análise de tendência de preço
+    - Dados concretos e não genéricos
+  expected_output: >
+    "APROVADO" se todos os itens estiverem presentes, 
+    ou "REPROVADO: [lista de itens faltando]"
+  agent: validator
+
+validate_news_task:
+  description: >
+    Revise a análise de notícias do analista de mercado. Verifique se contém:
+    - Pelo menos 3 notícias recentes (últimos 7 dias)
+    - Classificação de sentimento (Positivo/Negativo/Neutro) para cada notícia
+    - Impacto no preço da ação
+  expected_output: >
+    "APROVADO" se todos os itens estiverem presentes,
+    ou "REPROVADO: [lista de itens faltando]"
+  agent: validator

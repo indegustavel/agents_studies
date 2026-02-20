@@ -60,6 +60,15 @@ class StockAnalystCrew():
             llm=self.main_llm
             # Note: Ele não precisa de ferramentas, ele usa a lógica da LLM
         )
+    
+    @agent
+    def validator(self) -> Agent:
+        """Cria o agente validador"""
+        return Agent(
+            config=self.agents_config['validator'],
+            verbose=True,
+            llm=self.main_llm
+        )
 
     # --- Definição das Tarefas ---
 
@@ -85,6 +94,18 @@ class StockAnalystCrew():
             config=self.tasks_config['recommendation_task'],
             output_file='relatorio_final_{data}.md' # O resultado final será gravado neste arquivo
         )
+    
+    @task
+    def validation_research_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['validation_research_task']
+        )
+        
+    @task
+    def validation_news_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['validation_news_task']
+        )
 
     # --- O Processo (A Equipe) ---
 
@@ -96,7 +117,13 @@ class StockAnalystCrew():
         """
         return Crew(
             agents=self.agents, # Lista de agentes criados acima
-            tasks=self.tasks,   # Lista de tarefas criadas acima
-            process=Process.sequential, # Processo Linear: Agente 1 -> Agente 2 -> Agente 3
+            tasks=[
+                self.research_task(),                   # 1º - Researcher executa
+                self.validation_research_task(),        # 2º - Validator revisa pesquisas
+                self.news_analysis_task(),              # 3º - News Analyst executa
+                self.validation_news_task(),            # 4º - Validator revisa notícias
+                self.recommendation_task()              # 5º - Investment Advisor finaliza
+                ],   # Lista de tarefas criadas acima
+            process=Process.sequential, # Processo Linear: Agente 1 -> Agente 2 -> Agente 3 -> Agente 4
             verbose=True,
         )

@@ -16,7 +16,7 @@ def run():
     # 2. Definimos qual ação queremos analisar
     # Você pode mudar para 'AAPL', 'NVDA', 'ITUB4.SA', etc.
     inputs = {
-        'ticket': 'PETR4.SA',
+        'ticket': 'NVDA',
         'data': datetime.now().strftime("%m-%d")
     }
 
