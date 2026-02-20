@@ -12,3 +12,6 @@
 
 - Aqui, não estamos mais falando de um único agente. Passamos a abordar o conceito de MAS (Multi-Agent System), ou, Sistema Multi Agentes. Crew AI é um dos frameworks que se destacam por ser focado em orquestração, construção e gerenciamento de sistema multi agentes. Além disso, é construído sobre a infraestrutura do LangChain, o que significa que ele herda integrações com vários modelos de linguagem e ferramentas. Nessa biblioteca, o diferencial é produtividade, é construir times de agentes sem precisar lidar com detalhes de baixo nível de abstração.
 
+# LangGraph
+
+- Para cenários complexos, onde cada parte do código pode seguir várias direções, estados ou fluxos, o framework ideal é o LangGraph. Essa biblioteca é também uma extensão do LangChain que permite a construção de fluxos de agentes de forma orientada a grafos, em vez de sequências lineares simples. Aqui temos nós e arestas definindo múltiplos caminhos: loops, ramificações, junções de resultados, etc.
