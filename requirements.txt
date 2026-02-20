@@ -19,3 +19,5 @@ python-dotenv
 litellm
 pydantic
 gitpython
+bandit
+safety
