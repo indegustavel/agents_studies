@@ -1,0 +1,4 @@
+- **[Multi-Agentes CrewAI](frameworks_e_ferramentas/multi_agentes_crewAI/)**: Sistema multiagentes para análise de investimentos em ações.
+  - Agente Pesquisador (dados técnicos)
+  - Agente Analista de Notícias (sentimento de mercado)
+  - Agente Consultor (recomendação final)

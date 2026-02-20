@@ -18,7 +18,7 @@ class StockAnalystCrew():
     # Criamos um objeto de configuração da LLM
     # Aqui você tem controle total sobre o modelo e a 'criatividade' (temperature)
     main_llm = LLM(
-        model="openrouter/z-ai/glm-4.5-air:free", 
+        model="openrouter/nvidia/nemotron-3-nano-30b-a3b:free", 
         base_url="https://openrouter.ai/api/v1",
         temperature=0.2,
         # Você pode até forçar o idioma aqui se o modelo insistir em inglês
