@@ -17,3 +17,5 @@ yfinance
 duckduckgo-search
 python-dotenv
 litellm
+pydantic
+gitpython
