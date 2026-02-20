@@ -52,5 +52,5 @@ def run_security_audit(url: str):
 
 if __name__ == "__main__":
     # Teste com um repositório real de exemplo (ou o seu próprio)
-    test_repo = "https://github.com/flavorjones/loofah" # Exemplo de repo Ruby/Python
+    test_repo = "https://github.com/indegustavel/Agents_studies" # Exemplo de repo Ruby/Python
     run_security_audit(test_repo)

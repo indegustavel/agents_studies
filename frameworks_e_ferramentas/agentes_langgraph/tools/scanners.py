@@ -51,8 +51,13 @@ def run_safety_scan(local_path: str) -> list:
         )
         
         if result.stdout:
-            # O output do Safety pode variar conforme a versão, geralmente é uma lista de dicts
-            return json.loads(result.stdout)
+            # O output do Safety pode variar conforme a versão
+            # Quando não há vulnerabilidades, retorna texto (não JSON)
+            try:
+                return json.loads(result.stdout)
+            except json.JSONDecodeError:
+                # Safety retornou texto (sem vulnerabilidades encontradas)
+                return []
         return []
         
     except Exception as e:
